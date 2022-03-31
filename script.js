@@ -24,12 +24,40 @@ function playRound(playerSelection, computerSelection) {
             return "You lose! Scissors beats Paper"
         }
     }
-    else {
+    else if (playerSelection == "scissors") {
         if (computerSelection == "paper") {
             return "You win! Scissors beats Paper"
         }
         else {
             return "You lose! Rock beats Scissors"
         }
+    }
+    else {
+        return "Invalid move."
+    }
+}
+
+function game(){
+    let Player = 0;
+    let CPU = 0;
+    for (let i = 0; i < 5; i++) {
+        let round = playRound(prompt("Make your move:"), computerPlay());
+        if (round.includes("win")) {
+            Player += 1;
+        }
+        else {
+            CPU += 1;
+        }
+        console.log(round)
+
+    }
+    if (Player > CPU) {
+        console.log("You win " + Player + " to " + CPU);
+    }
+    else if (Player == CPU) {
+        console.log("It's an overall tie!");
+    }
+    else {
+        console.log("You lose " + Player + " to " + CPU);
     }
 }

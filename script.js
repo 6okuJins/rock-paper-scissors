@@ -37,15 +37,14 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-
-
+const body = document.querySelector("body");
 const buttons = document.querySelectorAll("button");
 let [playerScore , computerScore] = [0, 0];
 const player = document.querySelector(".player .number");
 const computer = document.querySelector(".computer .number");
 const announce = document.querySelector("#score-announce");
 
-buttons.forEach(button => button.addEventListener("click", () => {
+let startGame = () => buttons.forEach(button => button.addEventListener("click", function game() {
     const round = playRound(button["id"], computerPlay());
     // update player vs. computer score
     if (round.includes("win")) {
@@ -58,12 +57,28 @@ buttons.forEach(button => button.addEventListener("click", () => {
     player.textContent =  playerScore;
     computer.textContent = computerScore;
     announce.textContent = round;
+
     // check for game over
     const result = checkScore();
     if (result) {
         announce.textContent = result;
+        // lock the scores
+        buttons.forEach(button => button.removeEventListener("click", game));
+        // add reset button
+        const reset = document.createElement('button');
+        body.appendChild(reset);
+        reset.textContent = "New Game";
+        reset.addEventListener("click", () => {
+            playerScore = 0;
+            computerScore = 0;
+            player.textContent = playerScore;
+            computer.textContent = computerScore;
+            startGame();
+            body.removeChild(reset);
+        })
     }
 }));
+startGame();
 
 function checkScore() {
     if (playerScore == computerScore == 5) {

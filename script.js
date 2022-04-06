@@ -37,27 +37,43 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game(){
-    let Player = 0;
-    let CPU = 0;
-    for (let i = 0; i < 5; i++) {
-        let round = playRound(prompt("Make your move:"), computerPlay());
-        if (round.includes("win")) {
-            Player += 1;
-        }
-        else {
-            CPU += 1;
-        }
-        console.log(round)
 
+
+const buttons = document.querySelectorAll("button");
+let [playerScore , computerScore] = [0, 0];
+const player = document.querySelector(".player .number");
+const computer = document.querySelector(".computer .number");
+const announce = document.querySelector("#score-announce");
+
+buttons.forEach(button => button.addEventListener("click", () => {
+    const round = playRound(button["id"], computerPlay());
+    // update player vs. computer score
+    if (round.includes("win")) {
+        playerScore += 1;
     }
-    if (Player > CPU) {
-        console.log("You win " + Player + " to " + CPU);
+    else if (round.includes("lose")) {
+        computerScore += 1;
     }
-    else if (Player == CPU) {
-        console.log("It's an overall tie!");
+    else {playerScore += 1; computerScore += 1}
+    player.textContent =  playerScore;
+    computer.textContent = computerScore;
+    announce.textContent = round;
+    // check for game over
+    const result = checkScore();
+    if (result) {
+        announce.textContent = result;
     }
-    else {
-        console.log("You lose " + Player + " to " + CPU);
+}));
+
+function checkScore() {
+    if (playerScore == computerScore == 5) {
+        return "It's an overall tie!";
     }
+    else if (playerScore == 5) {
+        return "You win the contest!";
+    }
+    else if (computerScore == 5) {
+        return "You lose the contest!";
+    }
+    else {return null}
 }

@@ -8,6 +8,11 @@ body {
 }
 button {
     font-size: 50px;
+    transition: all 0.2s;
+}
+button:hover {
+    transform: scale(1.2);
+    box-shadow: 10px 10px 10px grey;
 }
 .results {
     display: flex;

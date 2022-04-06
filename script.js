@@ -73,6 +73,7 @@ let startGame = () => buttons.forEach(button => button.addEventListener("click",
             computerScore = 0;
             player.textContent = playerScore;
             computer.textContent = computerScore;
+            announce.textContent = "";
             startGame();
             body.removeChild(reset);
         })
